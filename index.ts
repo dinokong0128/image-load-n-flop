@@ -11,6 +11,6 @@ async function imageLoadNFlop(path: string): Promise<void> {
     console.log(`flipped image saved as ${resultFileName}`);
 }
 
-if (process.argv && process.argv[0]) {
-    imageLoadNFlop(process.argv[0]);
+if (process.argv && process.argv.slice(2).length > 0) {
+    imageLoadNFlop(process.argv.slice(2)[0]);
 }
