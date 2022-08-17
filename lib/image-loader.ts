@@ -8,13 +8,14 @@ import fs from 'fs';
  */
 export default async function (path: string): Promise<Buffer | undefined> {
     try {
-        const urlPattern = new RegExp('https?:\/\/(www\.)?[-a-zA-Z0-9@:%\._\+~#=]{1,256}', 'i');
+        const urlPattern = new RegExp('https?://(www.)?[-a-zA-Z0-9@:%._+~#=]{1,256}', 'i');
 
+        // download the image if it is an url
         if(urlPattern.test(path)) {
             const {data} = await axios.get(path, {
                 headers: {Accepts: 'image/*'}, responseType: 'arraybuffer'
             });
-            return data;
+            return Buffer.from(data);
         }
 
         return fs.readFileSync(path);

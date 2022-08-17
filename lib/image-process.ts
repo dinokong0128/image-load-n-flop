@@ -2,10 +2,10 @@ import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
 
-export default async function(data: Buffer): Promise<void> {
+export default async function(data: Buffer): Promise<string | undefined> {
     try {
-        const {format} = await sharp(data).metadata();
-        const flippedBuffer = await sharp(data).flip().flop().toBuffer();
+        const {format} = await sharp(data, {failOn: 'none', unlimited: true}).metadata();
+        const flippedBuffer = await sharp(data, {failOn: 'none', unlimited: true}).flip().flop().toBuffer();
 
         // attempt to create the folder just in case it doesn't exist
         fs.mkdirSync(path.join(__dirname, '../output'), {recursive: true});
@@ -15,7 +15,7 @@ export default async function(data: Buffer): Promise<void> {
 
         fs.writeFileSync(filePath, flippedBuffer);
 
-        console.log(`image saved as ${filePath}`);
+        return filePath;
     } catch(error) {
         console.error(error);
     }

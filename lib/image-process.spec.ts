@@ -10,7 +10,8 @@ describe('image process', () => {
     it('flips and save the provided image buffer', async() => {
         const originalImage = fs.readFileSync(path.join(__dirname, '__fixtures__/example.jpg'));
         const processedImage = fs.readFileSync(path.join(__dirname, '__fixtures__/example-processed.jpg'));
-        await imageProcess(originalImage);
+        const resultFileName = await imageProcess(originalImage);
+        expect(resultFileName).toBeDefined();
 
         expect(fs.writeFileSync).toHaveBeenCalled();
         const calledArguments = (fs.writeFileSync as jest.Mock).mock.calls[0];

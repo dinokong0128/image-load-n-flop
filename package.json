@@ -8,7 +8,9 @@
     "npm": ">=6"
   },
   "scripts": {
-    "test": "jest"
+    "build": "npx tsc",
+    "test": "jest",
+    "lint": "npx eslint ."
   },
   "repository": {
     "type": "git",
